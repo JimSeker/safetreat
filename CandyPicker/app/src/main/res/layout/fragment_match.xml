@@ -1,0 +1,131 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/RelativeLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    tools:context="edu.cs4730.candypicker.MatchFragment" >
+
+
+    <ViewSwitcher
+        android:id="@+id/vs_card1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="85dp"
+        android:layout_marginTop="85dp"
+        android:clickable="true" >
+
+    <ImageView
+        android:id="@+id/iv_card1a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+        <ImageView
+        android:id="@+id/iv_card1b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    </ViewSwitcher>
+    
+    <ViewSwitcher
+        android:id="@+id/vs_card2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignTop="@+id/vs_card1"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@+id/vs_card1">
+    <ImageView
+        android:id="@+id/iv_card2a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    <ImageView
+        android:id="@+id/iv_card2b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" /> 
+    </ViewSwitcher>  
+    
+    <ViewSwitcher
+        android:id="@+id/vs_card3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_above="@+id/vs_card4"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@+id/vs_card2">
+     <ImageView
+        android:id="@+id/iv_card3a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    <ImageView
+        android:id="@+id/iv_card3b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    </ViewSwitcher>
+    
+    <ViewSwitcher
+        android:id="@+id/vs_card4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_below="@+id/vs_card1"
+        android:layout_marginTop="100dp"
+        android:layout_toLeftOf="@+id/vs_card2">
+    <ImageView
+        android:id="@+id/iv_card4a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    <ImageView
+        android:id="@+id/iv_card4b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    </ViewSwitcher>
+    
+    <ViewSwitcher
+        android:id="@+id/vs_card5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignLeft="@+id/vs_card2"
+        android:layout_alignTop="@+id/vs_card4">
+    <ImageView
+        android:id="@+id/iv_card5a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    <ImageView
+        android:id="@+id/iv_card5b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    </ViewSwitcher>
+    
+    <ViewSwitcher
+        android:id="@+id/vs_card6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:layout_alignLeft="@+id/vs_card3"
+        android:layout_alignTop="@+id/vs_card5">
+    
+    <ImageView
+        android:id="@+id/iv_card6a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    <ImageView
+        android:id="@+id/iv_card6b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/back" />
+    </ViewSwitcher>
+
+</RelativeLayout>

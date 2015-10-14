@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Candy Picker</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Set Number of Buckets</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+ <string name="alert_dialog_two_buttons_title">Do you really want to Quit?</string>
+<string name="alert_dialog_cancel">No</string>
+<string name="alert_dialog_ok">Yes</string>
+</resources>
