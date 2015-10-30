@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="85dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="12dp"
         android:clickable="true" >
 
     <ImageView
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_alignTop="@+id/vs_card1"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="25dp"
         android:layout_toRightOf="@+id/vs_card1">
     <ImageView
         android:id="@+id/iv_card2a"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_above="@+id/vs_card4"
-        android:layout_marginLeft="100dp"
+        android:layout_marginLeft="25dp"
         android:layout_toRightOf="@+id/vs_card2">
      <ImageView
         android:id="@+id/iv_card3a"
@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:layout_below="@+id/vs_card1"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="25dp"
         android:layout_toLeftOf="@+id/vs_card2">
     <ImageView
         android:id="@+id/iv_card4a"

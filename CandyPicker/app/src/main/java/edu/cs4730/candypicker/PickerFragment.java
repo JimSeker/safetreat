@@ -42,7 +42,7 @@ public class PickerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View myView = inflater.inflate(R.layout.fragment_picker, container, false);
+		View myView = inflater.inflate(R.layout.fragment_picker2, container, false);
 		
 		//random covers for the cards.  1 to 6.
 		board = new int[]{0,0,0,0,0,0,0}; //7, so I can use 1 to 6, instead of 0 to 5
