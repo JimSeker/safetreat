@@ -55,7 +55,7 @@ public class MatchFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// Inflate the layout for this fragment
-		View myView =  inflater.inflate(R.layout.fragment_match, container, false);
+		View myView =  inflater.inflate(R.layout.fragment_match2, container, false);
 
 		//get all the widgets and setup listeners. 
 		//then call the setup method to set the cards and data structures.
