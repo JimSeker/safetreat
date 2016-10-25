@@ -191,6 +191,7 @@ public class MatchFragment extends Fragment {
 				 winDialogFrag editNameDialog = new winDialogFrag();
 				 editNameDialog.setCancelable(false);  //have to click on the dialog in order for it go away.
 				 editNameDialog.show(fm, "stuff.");
+
 			}
 		} else {
 			//flip them back over, no match before.
@@ -276,6 +277,7 @@ public class MatchFragment extends Fragment {
 			View view = inflater.inflate(R.layout.match_winner, container);
 			ib = (ImageButton) view.findViewById(R.id.imageButton1);
 			ib.setImageDrawable(getRandomImage());
+            mListener.speaknum(speaknum);
 			getDialog().setTitle("Winner!!!!");
 			ib.setOnClickListener(this);
 			
@@ -347,7 +349,8 @@ public class MatchFragment extends Fragment {
 
 		public void onFragmentInteraction(int which);  //1 is Picker, 2 is Match
 		public int GetNumber();
-		public void setNumber(int num); 
+		public void setNumber(int num);
+		public void speaknum(int num) ;
 	}
 
 }

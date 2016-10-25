@@ -26,7 +26,7 @@ public class PickerFragment extends Fragment {
 	public Context myContext;
 	
 	Random myRandom = new Random();
-	
+	int speaknum;
 	int currentcard =0;
 	
 	public PickerFragment() {
@@ -185,12 +185,13 @@ public class PickerFragment extends Fragment {
 		break;
 		}
 		currentcard = i;
+        mListener.speaknum(speaknum);
 		
 	}
 	public Drawable getRandomImage() {
 		Drawable d = null;
 		int i = mListener.GetNumber();
-
+        speaknum  =i;
 		switch (i) {
 		case 1: d = getResources().getDrawable(R.drawable.one);
 		break;
@@ -260,7 +261,8 @@ public class PickerFragment extends Fragment {
 		// TODO: Update argument type and name
 		public void onFragmentInteraction(int which);  //1 is Picker, 2 is Match
 		public int GetNumber();
-		public void setNumber(int num); 
+		public void setNumber(int num);
+		public void speaknum(int num) ;
 	}
 
 }

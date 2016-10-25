@@ -8,7 +8,10 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,14 +24,22 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.speech.tts.TextToSpeech;
+import android.speech.tts.TextToSpeech.OnInitListener;
 
 
 public class MainActivity extends Activity implements PickerFragment.OnFragmentInteractionListener,
-													  MatchFragment.OnFragmentInteractionListener {
+													  MatchFragment.OnFragmentInteractionListener,
+                                                        OnInitListener{
 	
-	int buckets = 5;  //default value?  not sure what that should be.
+	int buckets = 4;  //default value?  not sure what that should be.
 
 	Random myRandom = new Random();
+    private static final int REQ_TTS_STATUS_CHECK = 0;
+    private static final String TAG = "MainActivity";
+    private TextToSpeech mTts;
+    private boolean CanSpeak = false, WantSpeak =true;
+    private String myUtteranceId = "txt2spk";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,12 @@ public class MainActivity extends Activity implements PickerFragment.OnFragmentI
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PickerFragment()).commit();
 		}
+
+        // Check to be sure that TTS exists and is okay to use
+        Intent checkIntent = new Intent();
+        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        //The result will come back in onActivityResult with our REQ_TTS_STATUS_CHECK number
+        startActivityForResult(checkIntent, REQ_TTS_STATUS_CHECK);
 	}
 
 	@Override
@@ -67,11 +84,43 @@ public class MainActivity extends Activity implements PickerFragment.OnFragmentI
 			//Log.V("MainActivity", "menu called, should switch...");
 			onFragmentInteraction(2);
 			return true;
-		}
+		} else if (id == R.id.Sound) {
+            WantSpeak = !WantSpeak;
+            return true;
+        }
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
+
+    @Override
+    public void onInit(int status) {
+        // Now that the TTS engine is ready, we enable the button
+        if( status == TextToSpeech.SUCCESS) {
+            CanSpeak = true;
+        }
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQ_TTS_STATUS_CHECK) {
+            switch (resultCode) {
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS:
+                    // TTS is up and running
+                    mTts = new TextToSpeech(getApplicationContext(), this);
+                    Log.v(TAG, "Pico is installed okay");
+                    break;
+                case TextToSpeech.Engine.CHECK_VOICE_DATA_FAIL:
+                default:
+                    Log.e(TAG, "Got a failure. TTS apparently not available");
+            }
+        }
+        else {
+            // Got something else
+        }
+    }
+
+
+    @Override
 	public void onFragmentInteraction(int which) {
 		if (which ==1) { //picker
 			getFragmentManager().beginTransaction()
@@ -92,7 +141,21 @@ public class MainActivity extends Activity implements PickerFragment.OnFragmentI
 	public void setNumber(int num) {
 		buckets = num;
 	}
-	
+
+    @Override
+    public void speaknum(int num) {
+        if (!CanSpeak || !WantSpeak) return;
+        //String stringnum = "Bucket " + String.valueOf(num);
+        String stringnum =  String.valueOf(num);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //not sure what an utteranceId is supposed to be... we maybe able to setup a
+            //listener for "utterances" and check to see if they completed or something.
+            mTts.speak(stringnum, TextToSpeech.QUEUE_ADD, null, myUtteranceId);
+        } else {  //below lollipop and use this method instead.
+            mTts.speak(stringnum, TextToSpeech.QUEUE_ADD, null);
+        }
+    }
+
 	public class numDialogFrag extends DialogFragment implements OnEditorActionListener {
 
 		private EditText mEditText;
@@ -125,9 +188,7 @@ public class MainActivity extends Activity implements PickerFragment.OnFragmentI
 
 	}
 
-	
-	
-	/*
+    /*
 	 *
 	 * If we wanted to deal with the back button, this is the method for it.
 	 * (non-Javadoc)
