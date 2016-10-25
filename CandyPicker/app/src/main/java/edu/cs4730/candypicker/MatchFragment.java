@@ -40,7 +40,7 @@ public class MatchFragment extends Fragment {
 	
 	Random myRandom = new Random();
 	int board[];
-	
+	int speaknum = 0;
 	int pickone=0, picktwo = 0;
 	
 	ViewSwitcher card1, card2, card3, card4, card5, card6;
@@ -225,7 +225,7 @@ public class MatchFragment extends Fragment {
 	public Drawable getRandomImage() {
 		Drawable d = null;
 		int i = mListener.GetNumber();
-
+		speaknum  =i;
 		switch (i) {
 		case 1: d = getResources().getDrawable(R.drawable.one);
 		break;
