@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -221,10 +222,10 @@ public class MatchFragment extends Fragment {
         speaknum = i;
         switch (i) {
             case 1:
-                d = getResources().getDrawable(R.drawable.one);
+                d = ContextCompat.getDrawable(getActivity(), R.drawable.one);
                 break;
             case 2:
-                d = getResources().getDrawable(R.drawable.two);
+                d = ContextCompat.getDrawable(getActivity(), R.drawable.two);
                 break;
             case 3:
                 d = getResources().getDrawable(R.drawable.three);
@@ -315,62 +316,7 @@ public class MatchFragment extends Fragment {
         dialog.show();
     }
 
-    /*
-        public class winDialogFrag extends DialogFragment implements OnClickListener {
 
-            private ImageButton ib;
-            public winDialogFrag() {
-                // Empty constructor required for DialogFragment
-            }
-            @Override
-            public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-                View view = inflater.inflate(R.layout.match_winner, container);
-                ib = (ImageButton) view.findViewById(R.id.imageButton1);
-                ib.setImageDrawable(getRandomImage());
-                mListener.speaknum(speaknum);
-                getDialog().setTitle("Winner!!!!");
-                ib.setOnClickListener(this);
-
-                //style settings
-                //see if I can find a dark one to match, except can see any different no matter what I pick. :(
-                //setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme_Black);
-
-                return view;
-            }
-            @Override
-            public void onClick(View v) {
-
-                this.dismiss();
-
-                if  (pickone == 1 || picktwo ==1) {
-                    card1.showNext();
-                }
-                if (pickone == 2 || picktwo ==2) {
-                    card2.showNext();
-                }
-                if (pickone == 3 || picktwo ==3) {
-                    card3.showNext();
-                }
-                if (pickone == 4 || picktwo ==4) {
-                    card4.showNext();
-                }
-                if (pickone == 5 || picktwo ==5) {
-                    card5.showNext();
-                }
-                if (pickone == 6 || picktwo ==6) {
-                    card6.showNext();
-                }
-                pickone = 0;
-                picktwo=0;
-                setup();
-
-
-            }
-
-
-        }
-
-        */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
