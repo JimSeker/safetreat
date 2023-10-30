@@ -2,14 +2,14 @@ package edu.cs4730.candypicker;
 
 import java.util.Random;
 
-import android.support.v7.app.AlertDialog;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ContextThemeWrapper;
+
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +19,9 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.EditText;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity implements PickerFragment.OnFragmentInteractionListener,
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements PickerFragment.On
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQ_TTS_STATUS_CHECK) {
             switch (resultCode) {
                 case TextToSpeech.Engine.CHECK_VOICE_DATA_PASS:

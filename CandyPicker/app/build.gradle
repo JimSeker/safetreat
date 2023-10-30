@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.2"
+    compileSdk 33
+
 
     defaultConfig {
         applicationId "edu.cs4730.candypicker"
-        minSdkVersion 16
-        targetSdkVersion 26
+        minSdkVersion 24
+        targetSdk 31
     }
 
     buildTypes {
@@ -16,8 +16,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+    namespace 'edu.cs4730.candypicker'
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:26.1.0'
+    implementation("androidx.appcompat:appcompat:1.6.1")
 }

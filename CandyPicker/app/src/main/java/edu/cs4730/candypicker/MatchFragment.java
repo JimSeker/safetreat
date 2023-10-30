@@ -3,12 +3,10 @@ package edu.cs4730.candypicker;
 import java.util.Random;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.view.ContextThemeWrapper;
+
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +16,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.ViewSwitcher;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -222,22 +225,22 @@ public class MatchFragment extends Fragment {
         speaknum = i;
         switch (i) {
             case 1:
-                d = ContextCompat.getDrawable(getActivity(), R.drawable.one);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.one);
                 break;
             case 2:
-                d = ContextCompat.getDrawable(getActivity(), R.drawable.two);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.two);
                 break;
             case 3:
-                d = getResources().getDrawable(R.drawable.three);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.three);
                 break;
             case 4:
-                d = getResources().getDrawable(R.drawable.four);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.four);
                 break;
             case 5:
-                d = getResources().getDrawable(R.drawable.five);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.five);
                 break;
             default:
-                d = getResources().getDrawable(R.drawable.one);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.one);
         }
         return d;
     }
@@ -247,35 +250,35 @@ public class MatchFragment extends Fragment {
 
         switch (i) {
             case 1:
-                d = getResources().getDrawable(R.drawable.pic1);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic1);
                 break;
             case 2:
-                d = getResources().getDrawable(R.drawable.pic2);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic2);
                 break;
             case 3:
-                d = getResources().getDrawable(R.drawable.pic3);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic3);
                 break;
             case 4:
-                d = getResources().getDrawable(R.drawable.pic4);
+                d =ContextCompat.getDrawable(requireActivity(),R.drawable.pic4);
                 break;
             case 5:
-                d = getResources().getDrawable(R.drawable.pic5);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic5);
                 break;
             case 6:
-                d = getResources().getDrawable(R.drawable.pic6);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic6);
                 break;
             default:
-                d = getResources().getDrawable(R.drawable.pic1);
+                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic1);
         }
         return d;
     }
 
     void showDialog() {
         ImageButton ib;
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(requireActivity());
         View view = inflater.inflate(R.layout.match_winner, null);
 
-        final AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.Theme_AppCompat)).create();
+        final AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(requireActivity(), R.style.Theme_AppCompat)).create();
         dialog.setTitle("Winner!!!!");
 
 
@@ -318,13 +321,13 @@ public class MatchFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         myContext = context;
         try {
-            mListener = (OnFragmentInteractionListener) getActivity();
+            mListener = (OnFragmentInteractionListener) requireActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(getActivity().toString()
+            throw new ClassCastException(requireActivity().toString()
                     + " must implement OnFragmentInteractionListener");
         }
     }

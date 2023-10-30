@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CandyPicker.iml" filepath="$PROJECT_DIR$/CandyPicker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CandyPicker.app.unitTest.iml" />
     </modules>
   </component>
 </project>

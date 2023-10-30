@@ -4,7 +4,6 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -13,6 +12,8 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * A simple {@link Fragment} subclass. Activities that contain this fragment
