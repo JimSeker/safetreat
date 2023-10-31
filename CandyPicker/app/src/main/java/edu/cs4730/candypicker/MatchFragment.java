@@ -34,7 +34,7 @@ public class MatchFragment extends Fragment {
     public Context myContext;
 
     Random myRandom = new Random();
-    int board[];
+    int[] board;
     int speaknum = 0;
     int pickone = 0, picktwo = 0;
 
@@ -56,7 +56,7 @@ public class MatchFragment extends Fragment {
         //then call the setup method to set the cards and data structures.
 
         //card set 1
-        card1 = (ViewSwitcher) myView.findViewById(R.id.vs_card1);
+        card1 =  myView.findViewById(R.id.vs_card1);
         card1.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
         card1.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
         card1b = (ImageView) myView.findViewById(R.id.iv_card1b);
@@ -181,13 +181,6 @@ public class MatchFragment extends Fragment {
             picktwo = card;
             if (board[pickone] == board[picktwo]) {
                 showDialog();
-                //Winner!  call dialogFragment
-                //reset, and flip over the cards as well.
-                //FragmentManager fm = getFragmentManager();
-                //	 winDialogFrag editNameDialog = new winDialogFrag();
-                //	 editNameDialog.setCancelable(false);  //have to click on the dialog in order for it go away.
-                //	 editNameDialog.show(fm, "stuff.");
-
             }
         } else {
             //flip them back over, no match before.
