@@ -2,12 +2,8 @@ package edu.cs4730.candypicker;
 
 import java.util.Random;
 
-
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -20,12 +16,13 @@ import android.widget.EditText;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.activity.OnBackPressedCallback;
+
+import edu.cs4730.candypicker.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity implements PickerFragment.OnFragmentInteractionListener, MatchFragment.OnFragmentInteractionListener, OnInitListener {
@@ -35,30 +32,42 @@ public class MainActivity extends AppCompatActivity implements PickerFragment.On
     private static final String TAG = "MainActivity";
     private TextToSpeech mTts;
     private boolean CanSpeak = false, WantSpeak = true;
-    private String myUtteranceId = "txt2spk";
+    final private String myUtteranceId = "txt2spk";
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().add(R.id.container, new PickerFragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(binding.container.getId(), new PickerFragment()).commit();
         }
 
-        //using the new startActivityForResult method.
-        ActivityResultLauncher<Intent> myActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
-            public void onActivityResult(ActivityResult result) {
-                // if (result.getResultCode() == Activity.RESULT_OK) {
+            public void handleOnBackPressed() {
+                // Back is pressed... Finishing the activity
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(R.string.alert_dialog_two_buttons_title);
+                builder.setPositiveButton(R.string.alert_dialog_ok, (dialog, whichButton) -> finish());
+                builder.setNegativeButton(R.string.alert_dialog_cancel, (dialog, whichButton) -> dialog.dismiss());
+                builder.show();
+            }
+        });
+
+
+        //using the new startActivityForResult method.
+        ActivityResultLauncher<Intent> myActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
                 if (result.getResultCode() == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
                     // TTS is up and running
                     mTts = new TextToSpeech(getApplicationContext(), MainActivity.this);
                     Log.v(TAG, "Pico is installed okay");
                 } else Log.e(TAG, "Got a failure. TTS apparently not available");
-            }
-        });
+            });
         // Check to be sure that TTS exists and is okay to use
         Intent checkIntent = new Intent();
         checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
@@ -79,25 +88,17 @@ public class MainActivity extends AppCompatActivity implements PickerFragment.On
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            //show a dialogbox to ask for the number.
+            //show a dialog box to ask for the number.
             LayoutInflater inflater = LayoutInflater.from(this);
             View view = inflater.inflate(R.layout.fragment_number, null);
             final EditText mEditText = view.findViewById(R.id.txt_number);
             mEditText.requestFocus();
             final AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.Theme_AppCompat));
             builder.setView(view).setTitle("How many bins?");
-            builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    setNumber(Integer.parseInt(mEditText.getText().toString()));
-                    dialog.dismiss();
-                }
-            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-
-                }
-            });
+            builder.setPositiveButton("Set", (dialog, id2) -> {
+                setNumber(Integer.parseInt(mEditText.getText().toString()));
+                dialog.dismiss();
+            }).setNegativeButton("Cancel", (dialog, id1) -> dialog.cancel());
             // Show soft keyboard automatically (except won't work in emulators correctly!!!, when physical keyboard input set. Also no done... )
 
             AlertDialog dialog = builder.create();
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements PickerFragment.On
 
     @Override
     public void onInit(int status) {
-        // Now that the TTS engine is ready, we enable the button
+        // Now that the TTS engine is ready. We can read aloud and enable the button
         if (status == TextToSpeech.SUCCESS) {
             CanSpeak = true;
         }
@@ -130,9 +131,9 @@ public class MainActivity extends AppCompatActivity implements PickerFragment.On
     @Override
     public void onFragmentInteraction(int which) {
         if (which == 1) { //picker
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new PickerFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(binding.container.getId(), new PickerFragment()).commit();
         } else {
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new MatchFragment()).commit();
+            getSupportFragmentManager().beginTransaction().replace(binding.container.getId(), new MatchFragment()).commit();
         }
     }
 
@@ -147,44 +148,10 @@ public class MainActivity extends AppCompatActivity implements PickerFragment.On
     }
 
     @Override
-    public void speaknum(int num) {
+    public void speakNum(int num) {
         if (!CanSpeak || !WantSpeak) return;
-        //String stringnum = "Bucket " + String.valueOf(num);
-        String stringnum = String.valueOf(num);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //not sure what an utteranceId is supposed to be... we maybe able to setup a
-            //listener for "utterances" and check to see if they completed or something.
-            mTts.speak(stringnum, TextToSpeech.QUEUE_ADD, null, myUtteranceId);
-        } else {  //below lollipop and use this method instead.
-            mTts.speak(stringnum, TextToSpeech.QUEUE_ADD, null);
-        }
-    }
-
-
-    /*
-     *
-     * If we wanted to deal with the back button, this is the method for it.
-     * (non-Javadoc)
-     * @see android.support.v4.app.FragmentActivity#onBackPressed()
-     */
-    @Override
-    public void onBackPressed() {
-//		super.onBackPressed();
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.alert_dialog_two_buttons_title);
-        builder.setPositiveButton(R.string.alert_dialog_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                finish();
-            }
-        });
-        builder.setNegativeButton(R.string.alert_dialog_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-
+        String stringNum = String.valueOf(num);
+        mTts.speak(stringNum, TextToSpeech.QUEUE_ADD, null, myUtteranceId);
     }
 
 }

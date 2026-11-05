@@ -1,24 +1,31 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 33
-
+    compileSdk = 37
 
     defaultConfig {
-        applicationId "edu.cs4730.candypicker"
-        minSdkVersion 22
-        targetSdk 31
+        applicationId ="edu.cs4730.candypicker"
+        minSdk =23
+        //noinspection ExpiredTargetSdkVersion
+        targetSdk = 31
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled = false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
     }
-    namespace 'edu.cs4730.candypicker'
+    namespace = 'edu.cs4730.candypicker'
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.8.0")
+    implementation("com.google.android.material:material:1.14.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.2")
+    implementation("androidx.activity:activity:1.13.0")
 }

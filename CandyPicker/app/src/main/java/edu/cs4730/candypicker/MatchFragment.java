@@ -9,18 +9,16 @@ import android.graphics.drawable.Drawable;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-
-import android.widget.ViewSwitcher;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import edu.cs4730.candypicker.databinding.FragmentMatch2Binding;
+import edu.cs4730.candypicker.databinding.MatchWinnerBinding;
 
 
 /**
@@ -35,176 +33,135 @@ public class MatchFragment extends Fragment {
 
     Random myRandom = new Random();
     int[] board;
-    int speaknum = 0;
-    int pickone = 0, picktwo = 0;
+    int speakNum = 0;
+    int pickOne = 0, pickTwo = 0;
 
-    ViewSwitcher card1, card2, card3, card4, card5, card6;
-    ImageView card1a, card2a, card3a, card4a, card5a, card6a;
-    ImageView card1b, card2b, card3b, card4b, card5b, card6b;
+    FragmentMatch2Binding binding;
 
     public MatchFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View myView = inflater.inflate(R.layout.fragment_match2, container, false);
+        binding = FragmentMatch2Binding.inflate(inflater, container, false);
+        View myView = binding.getRoot();
 
         //get all the widgets and setup listeners.
         //then call the setup method to set the cards and data structures.
 
         //card set 1
-        card1 =  myView.findViewById(R.id.vs_card1);
-        card1.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
-        card1.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
-        card1b = (ImageView) myView.findViewById(R.id.iv_card1b);
-        card1a = (ImageView) myView.findViewById(R.id.iv_card1a);
-        //card1a.setImageDrawable(getRandomBack());
-        card1.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ismatch(1))
-                            card1.showNext();
-                    }
-                });
+        //card1 = myView.findViewById(R.id.vs_card1);
+        binding.vsCard1.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
+        binding.vsCard1.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
+        binding.vsCard1.setOnClickListener(
+            v -> {
+                if (isMatch(1))
+                    binding.vsCard1.showNext();
+            });
 
-        card2 = (ViewSwitcher) myView.findViewById(R.id.vs_card2);
-        card2.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
-        card2.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
-        card2b = (ImageView) myView.findViewById(R.id.iv_card2b);
-        card2a = (ImageView) myView.findViewById(R.id.iv_card2a);
-        card2.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ismatch(2))
-                            card2.showNext();
-                    }
-                });
+        binding.vsCard2.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
+        binding.vsCard2.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
+        binding.vsCard2.setOnClickListener(
+            v -> {
+                if (isMatch(2))
+                    binding.vsCard2.showNext();
+            });
 
         //card set 3
-        card3 = (ViewSwitcher) myView.findViewById(R.id.vs_card3);
-        card3.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
-        card3.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
-        card3b = (ImageView) myView.findViewById(R.id.iv_card3b);
-        card3a = (ImageView) myView.findViewById(R.id.iv_card3a);
-        card3.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ismatch(3))
-                            card3.showNext();
-                    }
-                });
+        binding.vsCard3.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
+        binding.vsCard3.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
+        binding.vsCard3.setOnClickListener(
+            v -> {
+                if (isMatch(3))
+                    binding.vsCard3.showNext();
+            });
         //card set 4
-        card4 = (ViewSwitcher) myView.findViewById(R.id.vs_card4);
-        card4.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
-        card4.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
-        card4b = (ImageView) myView.findViewById(R.id.iv_card4b);
-        card4a = (ImageView) myView.findViewById(R.id.iv_card4a);
-        card4.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ismatch(4))
-                            card4.showNext();
-                    }
-                });
+        binding.vsCard4.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
+        binding.vsCard4.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
+        binding.vsCard4.setOnClickListener(
+            v -> {
+                if (isMatch(4))
+                    binding.vsCard4.showNext();
+            });
         //card set 5
-        card5 = (ViewSwitcher) myView.findViewById(R.id.vs_card5);
-        card5.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
-        card5.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
-        card5b = (ImageView) myView.findViewById(R.id.iv_card5b);
-        card5a = (ImageView) myView.findViewById(R.id.iv_card5a);
-        card5.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ismatch(5))
-                            card5.showNext();
-                    }
-                });
+        binding.vsCard5.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
+        binding.vsCard5.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
+        binding.vsCard5.setOnClickListener(
+            v -> {
+                if (isMatch(5))
+                    binding.vsCard5.showNext();
+            });
         //card set 6
-        card6 = (ViewSwitcher) myView.findViewById(R.id.vs_card6);
-        card6.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
-        card6.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
-        card6b = (ImageView) myView.findViewById(R.id.iv_card6b);
-        card6a = (ImageView) myView.findViewById(R.id.iv_card6a);
-        card6.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (ismatch(6))
-                            card6.showNext();
-                    }
-                });
-        //mListener.onFragmentInteraction(i);
-
+        binding.vsCard6.setInAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_in_left)); //or android.R.anim.fade_in
+        binding.vsCard6.setOutAnimation(AnimationUtils.loadAnimation(myContext, android.R.anim.slide_out_right)); //or android.R.anim.fade_out
+        binding.vsCard6.setOnClickListener(
+            v -> {
+                if (isMatch(6))
+                    binding.vsCard6.showNext();
+            });
         setup();
         return myView;
     }
 
-    //this setups the game (or resets the game).
+    //this sets up the board for the game (or resets the game).
     public void setup() {
         //populate  the board
         board = new int[]{0, 0, 0, 0, 0, 0, 0}; //7, so I can use 1 to 6, instead of 0 to 5
 
-        int pos = 0;
+        int pos;
         int[] val = new int[]{1, 1, 2, 2, 3, 3};
         for (int value : val) { // two pairs of numbers, between 1 and 3
-            pos = myRandom.nextInt(6) + 1;
-            while (board[pos] != 0) {
+            do {
                 pos = myRandom.nextInt(6) + 1;
-            }
+            } while (board[pos] != 0);
             board[pos] = value;
         }
         //so now the board is setup, set the "b" card for each of them.
-        card1b.setImageDrawable(getbcard(board[1]));
-        card2b.setImageDrawable(getbcard(board[2]));
-        card3b.setImageDrawable(getbcard(board[3]));
-        card4b.setImageDrawable(getbcard(board[4]));
-        card5b.setImageDrawable(getbcard(board[5]));
-        card6b.setImageDrawable(getbcard(board[6]));
+        binding.ivCard1b.setImageDrawable(getBCard(board[1]));
+        binding.ivCard2b.setImageDrawable(getBCard(board[2]));
+        binding.ivCard3b.setImageDrawable(getBCard(board[3]));
+        binding.ivCard4b.setImageDrawable(getBCard(board[4]));
+        binding.ivCard5b.setImageDrawable(getBCard(board[5]));
+        binding.ivCard6b.setImageDrawable(getBCard(board[6]));
     }
 
-    public boolean ismatch(int card) {
+    public boolean isMatch(int card) {
 
-        if (card == pickone && picktwo == 0)
+        if (card == pickOne && pickTwo == 0)
             return false;
 
-        if (pickone == 0) { //first card flipped over
-            pickone = card;
-        } else if (picktwo == 0) { //is there a match
-            picktwo = card;
-            if (board[pickone] == board[picktwo]) {
+        if (pickOne == 0) { //first card flipped over
+            pickOne = card;
+        } else if (pickTwo == 0) { //is there a match
+            pickTwo = card;
+            if (board[pickOne] == board[pickTwo]) {
                 showDialog();
             }
         } else {
             //flip them back over, no match before.
-            //	Log.v("ismatch", "ff one is " + pickone+ " two is "+picktwo);
-            if (pickone == 1 || picktwo == 1) {
-                card1.showNext();
+            if (pickOne == 1 || pickTwo == 1) {
+                binding.vsCard1.showNext();
             }
-            if (pickone == 2 || picktwo == 2) {
-                card2.showNext();
+            if (pickOne == 2 || pickTwo == 2) {
+                binding.vsCard2.showNext();
             }
-            if (pickone == 3 || picktwo == 3) {
-                card3.showNext();
+            if (pickOne == 3 || pickTwo == 3) {
+                binding.vsCard3.showNext();
             }
-            if (pickone == 4 || picktwo == 4) {
-                card4.showNext();
+            if (pickOne == 4 || pickTwo == 4) {
+                binding.vsCard4.showNext();
             }
-            if (pickone == 5 || picktwo == 5) {
-                card5.showNext();
+            if (pickOne == 5 || pickTwo == 5) {
+                binding.vsCard5.showNext();
             }
-            if (pickone == 6 || picktwo == 6) {
-                card6.showNext();
+            if (pickOne == 6 || pickTwo == 6) {
+                binding.vsCard6.showNext();
             }
-            pickone = 0;
-            picktwo = 0;
+            pickOne = 0;
+            pickTwo = 0;
             return false;
 
         }
@@ -213,9 +170,9 @@ public class MatchFragment extends Fragment {
     }
 
     public Drawable getRandomImage() {
-        Drawable d = null;
+        Drawable d;
         int i = mListener.GetNumber();
-        speaknum = i;
+        speakNum = i;
         switch (i) {
             case 1:
                 d = ContextCompat.getDrawable(requireActivity(), R.drawable.one);
@@ -224,91 +181,89 @@ public class MatchFragment extends Fragment {
                 d = ContextCompat.getDrawable(requireActivity(), R.drawable.two);
                 break;
             case 3:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.three);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.three);
                 break;
             case 4:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.four);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.four);
                 break;
             case 5:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.five);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.five);
                 break;
             default:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.one);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.one);
         }
         return d;
     }
 
-    public Drawable getbcard(int i) {
-        Drawable d = null;
+    public Drawable getBCard(int i) {
+        Drawable d;
 
         switch (i) {
             case 1:
                 d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic1);
                 break;
             case 2:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic2);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic2);
                 break;
             case 3:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic3);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic3);
                 break;
             case 4:
-                d =ContextCompat.getDrawable(requireActivity(),R.drawable.pic4);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic4);
                 break;
             case 5:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic5);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic5);
                 break;
             case 6:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic6);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic6);
                 break;
             default:
-                d = ContextCompat.getDrawable(requireActivity(),R.drawable.pic1);
+                d = ContextCompat.getDrawable(requireActivity(), R.drawable.pic1);
         }
         return d;
     }
 
     void showDialog() {
-        ImageButton ib;
-        LayoutInflater inflater = LayoutInflater.from(requireActivity());
-        View view = inflater.inflate(R.layout.match_winner, null);
+        //ImageButton ib;
+        LayoutInflater inflater = getLayoutInflater();
+        MatchWinnerBinding bindingD = MatchWinnerBinding.inflate(inflater);
+//        View view = inflater.inflate(R.layout.match_winner, null);
 
         final AlertDialog dialog = new AlertDialog.Builder(new ContextThemeWrapper(requireActivity(), R.style.Theme_AppCompat)).create();
         dialog.setTitle("Winner!!!!");
 
 
-        ib = (ImageButton) view.findViewById(R.id.imageButton1);
-        ib.setImageDrawable(getRandomImage());
-        mListener.speaknum(speaknum);
-        ib.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
+        //ib = view.findViewById(R.id.imageButton1);
+        bindingD.imageButton1.setImageDrawable(getRandomImage());
+        mListener.speakNum(speakNum);
+        bindingD.imageButton1.setOnClickListener(view -> {
+            dialog.dismiss();
 
-                if (pickone == 1 || picktwo == 1) {
-                    card1.showNext();
-                }
-                if (pickone == 2 || picktwo == 2) {
-                    card2.showNext();
-                }
-                if (pickone == 3 || picktwo == 3) {
-                    card3.showNext();
-                }
-                if (pickone == 4 || picktwo == 4) {
-                    card4.showNext();
-                }
-                if (pickone == 5 || picktwo == 5) {
-                    card5.showNext();
-                }
-                if (pickone == 6 || picktwo == 6) {
-                    card6.showNext();
-                }
-                pickone = 0;
-                picktwo = 0;
-                setup();
-
+            if (pickOne == 1 || pickTwo == 1) {
+                binding.vsCard1.showNext();
             }
+            if (pickOne == 2 || pickTwo == 2) {
+                binding.vsCard2.showNext();
+            }
+            if (pickOne == 3 || pickTwo == 3) {
+                binding.vsCard3.showNext();
+            }
+            if (pickOne == 4 || pickTwo == 4) {
+                binding.vsCard4.showNext();
+            }
+            if (pickOne == 5 || pickTwo == 5) {
+                binding.vsCard5.showNext();
+            }
+            if (pickOne == 6 || pickTwo == 6) {
+                binding.vsCard6.showNext();
+            }
+            pickOne = 0;
+            pickTwo = 0;
+            setup();
+
         });
 
-        dialog.setView(view);
+        dialog.setView(bindingD.getRoot());
         dialog.show();
     }
 
@@ -320,8 +275,8 @@ public class MatchFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) requireActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(requireActivity().toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(requireActivity()
+                + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -339,13 +294,13 @@ public class MatchFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
 
-        public void onFragmentInteraction(int which);  //1 is Picker, 2 is Match
+        void onFragmentInteraction(int which);  //1 is Picker, 2 is Match
 
-        public int GetNumber();
+        int GetNumber();
 
-        public void setNumber(int num);
+        void setNumber(int num);
 
-        public void speaknum(int num);
+        void speakNum(int num);
     }
 
 }
